@@ -17,7 +17,7 @@ def find_metadata_div(source_code_to_search):
 
 
 def get_page_source(page_url):
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.get(page_url)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, 'groups')))
     page_source = driver.page_source
@@ -33,10 +33,17 @@ if __name__ == '__main__':
     print("=====================================================")
     metadata_div = find_metadata_div(source_code)
     print("Metadata Div: \n", metadata_div)
-    pattern_version = r'Current code version<\/td>\s*<td class="align-left">(.*?)<\/td>'
+    pattern_version = r"([A-Za-z0-9]+(\.[A-Za-z0-9]+)+)"
+    pattern_gitUrl = r'^.*[^"]*.*$'
     version_match = re.search(pattern_version, metadata_div, re.DOTALL)
+    gitUrl_match = re.search(pattern_gitUrl, metadata_div, re.DOTALL)
     if version_match:
         print("Version: ", version_match.group(1))
     else:
         print("Version: Not found")
+
+    if gitUrl_match:
+        print("Git URL: ", gitUrl_match.group(0))
+    else:
+        print("Git URL: Not found")
     print("=====================================================")
