@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 class WebpageScraper:
     def __init__(self):
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Chrome()
 
     def quit(self):
         self.driver.quit()

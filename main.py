@@ -1,6 +1,5 @@
 from db import db_host, db_user, db_password, db_name, table_name, columns
 from db.DatabaseHandler import DatabaseHandler
-from models import urls_to_check
 from models.HTMLParser import HTMLParser
 from models.Paper import Paper
 from models.WebpageScraper import WebpageScraper
@@ -8,6 +7,9 @@ from models.WebpageScraper import WebpageScraper
 if __name__ == '__main__':
     db_handler = DatabaseHandler(host=db_host, user=db_user, password=db_password,
                                  database=db_name)
+
+    with open('./urls.txt', 'r') as f:
+        urls_to_check = f.read().splitlines()
 
     for url in urls_to_check:
         web_scraper = WebpageScraper()
